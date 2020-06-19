@@ -49,7 +49,7 @@
         self.textView.delegate = self;
         [self.textContainer addSubview:self.textView];
         [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.textContainer).insets(_textEditingInsets);
+            make.edges.equalTo(self.textContainer).insets(self.textEditingInsets);
         }];
         
         self.textContainer.hidden = YES;

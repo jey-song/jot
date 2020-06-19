@@ -33,14 +33,14 @@ To run the example project, clone the repo, and run `pod install` from the `Exam
 
 ## Usage
 
-Add an instance of `JotViewController` as a child of your view controller. Adjust the size and layout of `JotViewController `'s view however you'd like.
+Add an instance of `JotView` as a child of your view controller. Adjust the size and layout of `JotView `'s view however you'd like.
 
 ```objc
 #import "ExampleViewController.h"
 #import <jot/jot.h>
 
 @interface ExampleViewController ()
-@property (nonatomic, strong) JotViewController *jotViewController;
+@property (nonatomic, strong) JotView *jotView;
 @end
 
 @implementation ExampleViewController
@@ -48,13 +48,13 @@ Add an instance of `JotViewController` as a child of your view controller. Adjus
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _jotViewController = [JotViewController new];
-    self.jotViewController.delegate = self;
+    _jotView = [JotView new];
+    self.jotView.delegate = self;
     
-    [self addChildViewController:self.jotViewController];
-    [self.view addSubview:self.jotViewController.view];
-    [self.jotViewController didMoveToParentViewController:self];
-    self.jotViewController.view.frame = self.view.frame;
+    [self addChildViewController:self.jotView];
+    [self.view addSubview:self.jotView];
+    [self.jotView didMoveToParentViewController:self];
+    self.jotView.frame = self.view.frame;
 }
 ```
 Switch between drawing, text manipulation, and text edit mode.
@@ -62,30 +62,30 @@ Switch between drawing, text manipulation, and text edit mode.
 ```objc
 - (void)switchToDrawMode
 {
-	self.jotViewController.state = JotViewStateDrawing;
+	self.jotView.state = JotViewStateDrawing;
 }
 
 - (void)switchToTextMode
 {
-	self.jotViewController.state = JotViewStateText;
+	self.jotView.state = JotViewStateText;
 }
 
 - (void)switchToTextEditMode
 {
-	self.jotViewController.state = JotViewStateEditingText;
+	self.jotView.state = JotViewStateEditingText;
 }
 ```
 Clear the drawing.
 
 ```objc
 // Clears text and drawing
-[self.jotViewController clearAll];
+[self.jotView clearAll];
 
 // Clears only text
-[self.jotViewController clearText];
+[self.jotView clearText];
 
 // Clears only drawing
-[self.jotViewController clearDrawing];
+[self.jotView clearDrawing];
 ```
 
 ### Image Output
@@ -96,7 +96,7 @@ Draw on a background image.
 - (UIImage *)imageWithDrawing
 {
 	UIImage *myImage = self.imageView.image;
-	return [self.jotViewController drawOnImage:myImage];
+	return [self.jotView drawOnImage:myImage];
 }
 ```
 
@@ -106,7 +106,7 @@ Draw on a color.
 - (UIImage *)imageOnColorWithDrawing
 {
 	UIColor *backgroundColor = self.view.backgroundColor;
-	return [self.jotViewController renderImageOnColor:backgroundColor];
+	return [self.jotView renderImageOnColor:backgroundColor];
 }
 ```
 
@@ -116,7 +116,7 @@ Draw on a transparent background.
 - (UIImage *)imageOnColorWithDrawing
 {
 	UIColor *backgroundColor = self.view.backgroundColor;
-	return [self.jotViewController renderImage];
+	return [self.jotView renderImage];
 }
 ```
 
@@ -127,22 +127,22 @@ Draw on a transparent background.
 Change the font.
 
 ```objc
-self.jotViewController.font = [UIFont boldSystemFontOfSize:64.f];
+self.jotView.font = [UIFont boldSystemFontOfSize:64.f];
 ```
 Change the font size.
 
 ```objc
-self.jotViewController.fontSize = 64.f;
+self.jotView.fontSize = 64.f;
 ```
 Change the text color.
 
 ```objc
-self.jotViewController.textColor = [UIColor redColor];
+self.jotView.textColor = [UIColor redColor];
 ```
 Set the initial text string.
 
 ```objc
-self.jotViewController.textString = @"Hello World";
+self.jotView.textString = @"Hello World";
 ```
 
 #### Drawing Settings
@@ -150,17 +150,17 @@ self.jotViewController.textString = @"Hello World";
 Change the drawing stroke color.
 
 ```objc
-self.jotViewController.drawingColor = [UIColor magentaColor];
+self.jotView.drawingColor = [UIColor magentaColor];
 ```
 Change the drawing stroke width.
 
 ```objc
-self.jotViewController.drawingStrokeWidth = 10.f;
+self.jotView.drawingStrokeWidth = 10.f;
 ```
 Make the drawing stroke a constant width, instead of the default dynamically variable width.
 
 ```objc
-self.jotViewController.drawingConstantStrokeWidth = YES;
+self.jotView.drawingConstantStrokeWidth = YES;
 ```
 
 ### Advanced Configuration
@@ -170,27 +170,27 @@ self.jotViewController.drawingConstantStrokeWidth = YES;
 Set the text to wrap to the width of the view.
 
 ```objc
-self.jotViewController.fitOriginalFontSizeToViewWidth = YES;
+self.jotView.fitOriginalFontSizeToViewWidth = YES;
 ```
 Set the text alignment (only applies if text is set to wrap).
 
 ```objc
-self.jotViewController.textAlignment = NSTextAlignmentRight;
+self.jotView.textAlignment = NSTextAlignmentRight;
 ```
 Set the text insets (only applies if text is set to wrap).
 
 ```objc
-self.jotViewController.initialTextInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
+self.jotView.initialTextInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
 ```
 Set the text editing insets.
 
 ```objc
-self.jotViewController.textEditingInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
+self.jotView.textEditingInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
 ```
 Set the text edit view to clip text to the text editing insets (instead of fading out with a gradient).
 
 ```objc
-self.jotViewController.clipBoundsToEditingInsets = YES;
+self.jotView.clipBoundsToEditingInsets = YES;
 ```
 
 ## Contributors

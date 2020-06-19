@@ -1,5 +1,5 @@
 //
-//  JotViewController.h
+//  JotView.h
 //  jot
 //
 //  Created by Laura Skelton on 4/30/15.
@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 
 /**
- *  The possible states of the JotViewController
+ *  The possible states of the JotView
  */
 typedef NS_ENUM(NSUInteger, JotViewState){
     /**
@@ -39,34 +39,34 @@ typedef NS_ENUM(NSUInteger, JotViewState){
 @import UIKit;
 #import "JotDrawingContainer.h"
 
-@protocol JotViewControllerDelegate;
+@protocol JotViewDelegate;
 
 /**
  *  Public class for you to use to create a jot view! Import <jot.h>
- *  into your view controller, then create an instance of JotViewController
+ *  into your view controller, then create an instance of JotView
  *  and add it as a child of your view controller. Set the state of the
- *  JotViewController to switch between manipulating text and drawing.
+ *  JotView to switch between manipulating text and drawing.
  *
  *  @note You will be able to see your view controller's view through
  *  the jot view, so you can display the jot view above either a colored
  *  background for a sketchpad/whiteboard-like interface, or above a photo
  *  for a photo annotation interface.
  */
-@interface JotViewController : UIViewController
+@interface JotView : UIView
 
 /**
- *  The delegate of the JotViewController instance.
+ *  The delegate of the JotView instance.
  */
-@property (nonatomic, weak) id <JotViewControllerDelegate> delegate;
+@property (nonatomic, weak) id <JotViewDelegate> delegate;
 
 /**
- *  The state of the JotViewController. Change the state between JotViewStateDrawing
+ *  The state of the JotView. Change the state between JotViewStateDrawing
  *  and JotViewStateText in response to your own editing controls to toggle between
  *  the different modes. Tapping while in JotViewStateText will automatically switch
  *  to JotViewStateEditingText, and tapping the keyboard's Done button will automatically
  *  switch back to JotViewStateText.
  *
- *  @note The JotViewController's delegate will get updates when it enters and exits
+ *  @note The JotView's delegate will get updates when it enters and exits
  *  text editing mode, in case you need to update your interface to reflect this.
  */
 @property (nonatomic, assign) JotViewState state;
@@ -217,16 +217,16 @@ typedef NS_ENUM(NSUInteger, JotViewState){
 
 @end
 
-@protocol JotViewControllerDelegate <NSObject>
+@protocol JotViewDelegate <NSObject>
 
 @optional
 
 /**
- *  Called whenever the JotViewController begins or ends text editing (keyboard entry) mode.
+ *  Called whenever the JotView begins or ends text editing (keyboard entry) mode.
  *
- *  @param jotViewController The draw text view controller
+ *  @param jotView The draw text view controller
  *  @param isEditing    YES if entering edit (keyboard text entry) mode, NO if exiting edit mode
  */
-- (void)jotViewController:(JotViewController *)jotViewController isEditingText:(BOOL)isEditing;
+- (void)jotView:(JotView *)jotView isEditingText:(BOOL)isEditing;
 
 @end

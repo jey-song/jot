@@ -45,5 +45,7 @@
 	<array>
 		<string>fontawesome-webfont.ttf</string>
 	</array>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>OK</string>
 </dict>
 </plist>

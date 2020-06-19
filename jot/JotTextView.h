@@ -11,7 +11,7 @@
 
 /**
  *  Private class to handle text display and gesture interactions.
- *  Change the properties in a JotViewController instance to 
+ *  Change the properties in a JotView instance to 
  *  configure this private class.
  */
 @interface JotTextView : UIView
@@ -19,7 +19,7 @@
 /**
  *  The text string the JotTextView is currently displaying.
  *
- *  @note Set textString in JotViewController
+ *  @note Set textString in JotView
  *  to control or read this property.
  */
 @property (nonatomic, strong) NSString *textString;
@@ -27,7 +27,7 @@
 /**
  *  The color of the text displayed in the JotTextView.
  *
- *  @note Set textColor in JotViewController
+ *  @note Set textColor in JotView
  *  to control this property.
  */
 @property (nonatomic, strong) UIColor *textColor;
@@ -35,7 +35,7 @@
 /**
  *  The font of the text displayed in the JotTextView.
  *
- *  @note Set font in JotViewController to control this property.
+ *  @note Set font in JotView to control this property.
  *  To change the default size of the font, you must also set the
  *  fontSize property to the desired font size.
  */
@@ -46,7 +46,7 @@
  *  displayed text's font size will get proportionally larger or smaller 
  *  than this size if the viewer pinch zooms the text.
  *
- *  @note Set fontSize in JotViewController to control this property,
+ *  @note Set fontSize in JotView to control this property,
  *  which overrides the size of the font property.
  */
 @property (nonatomic, assign) CGFloat fontSize;
@@ -55,7 +55,7 @@
  *  The alignment of the text displayed in the JotTextView, which only
  *  applies if fitOriginalFontSizeToViewWidth is true.
  *
- *  @note Set textAlignment in JotViewController to control this property,
+ *  @note Set textAlignment in JotView to control this property,
  *  which will be ignored if fitOriginalFontSizeToViewWidth is false.
  */
 @property (nonatomic, assign) NSTextAlignment textAlignment;
@@ -67,7 +67,7 @@
  *  full size of the JotTextView. The user can resize, move, and rotate the text from that
  *  starting position, but the overall proportions of the text will stay the same.
  *
- *  @note Set initialTextInsets in JotViewController to control this property,
+ *  @note Set initialTextInsets in JotView to control this property,
  *  which will be ignored if fitOriginalFontSizeToViewWidth is false.
  */
 @property (nonatomic, assign) UIEdgeInsets initialTextInsets;
@@ -79,14 +79,14 @@
  *  then the text will be displayed as a single line, and will ignore any initialTextInsets and
  *  textAlignment settings
  *
- *  @note Set fitOriginalFontSizeToViewWidth in JotViewController to control this property.
+ *  @note Set fitOriginalFontSizeToViewWidth in JotView to control this property.
  */
 @property (nonatomic, assign) BOOL fitOriginalFontSizeToViewWidth;
 
 /**
  *  Clears text from the drawing, giving a blank slate.
  *
- *  @note Call clearText or clearAll in JotViewController
+ *  @note Call clearText or clearAll in JotView
  *  to trigger this method.
  */
 - (void)clearText;
@@ -98,7 +98,7 @@
  *
  *  @return An image of the rendered drawing on the background image.
  *
- *  @note Call drawOnImage: in JotViewController
+ *  @note Call drawOnImage: in JotView
  *  to trigger this method.
  */
 - (UIImage *)drawTextOnImage:(UIImage *)image;
@@ -110,7 +110,7 @@
  *
  *  @return An image of the rendered text.
  *
- *  @note Call renderWithSize: in JotViewController
+ *  @note Call renderWithSize: in JotView
  *  to trigger this method.
  */
 - (UIImage *)renderDrawTextViewWithSize:(CGSize)size;

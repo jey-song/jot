@@ -13,7 +13,7 @@
 
 /**
  *  Private class to handle text editing. Change the properties
- *  in a JotViewController instance to configure this private class.
+ *  in a JotView instance to configure this private class.
  */
 @interface JotTextEditView : UIView
 
@@ -29,7 +29,7 @@
  *  This property controls whether or not the keyboard is displayed
  *  and the JotTextEditView is visible.
  *
- *  @note Set the JotViewController state to JotViewStateEditingText
+ *  @note Set the JotView state to JotViewStateEditingText
  *  to turn on editing mode in JotTextEditView.
  */
 @property (nonatomic, assign) BOOL isEditing;
@@ -37,7 +37,7 @@
 /**
  *  The text string the JotTextEditView is currently displaying.
  *
- *  @note Set textString in JotViewController
+ *  @note Set textString in JotView
  *  to control or read this property.
  */
 @property (nonatomic, strong) NSString *textString;
@@ -45,7 +45,7 @@
 /**
  *  The color of the text displayed in the JotTextEditView.
  *
- *  @note Set textColor in JotViewController
+ *  @note Set textColor in JotView
  *  to control this property.
  */
 @property (nonatomic, strong) UIColor *textColor;
@@ -53,7 +53,7 @@
 /**
  *  The font of the text displayed in the JotTextEditView.
  *
- *  @note Set font in JotViewController to control this property.
+ *  @note Set font in JotView to control this property.
  *  To change the default size of the font, you must also set the
  *  fontSize property to the desired font size.
  */
@@ -62,7 +62,7 @@
 /**
  *  The font size of the text displayed in the JotTextEditView.
  *
- *  @note Set fontSize in JotViewController to control this property,
+ *  @note Set fontSize in JotView to control this property,
  *  which overrides the size of the font property.
  */
 @property (nonatomic, assign) CGFloat fontSize;
@@ -70,7 +70,7 @@
 /**
  *  The alignment of the text displayed in the JotTextEditView.
  *
- *  @note Set textAlignment in JotViewController to control this property.
+ *  @note Set textAlignment in JotView to control this property.
  */
 @property (nonatomic, assign) NSTextAlignment textAlignment;
 
@@ -80,7 +80,7 @@
  *  with a gradient to the edges of the JotTextEditView. If clipBoundsToEditingInsets
  *  is true, then the text will be clipped at the inset instead of fading out.
  *
- *  @note Set textEditingInsets in JotViewController to control this property.
+ *  @note Set textEditingInsets in JotView to control this property.
  */
 @property (nonatomic, assign) UIEdgeInsets textEditingInsets;
 
@@ -90,7 +90,7 @@
  *  to the edges of the JotTextEditView. If clipBoundsToEditingInsets is true, 
  *  then the text will be clipped at the inset instead of fading out.
  *
- *  @note Set clipBoundsToEditingInsets in JotViewController to control this property.
+ *  @note Set clipBoundsToEditingInsets in JotView to control this property.
  */
 @property (nonatomic, assign) BOOL clipBoundsToEditingInsets;
 

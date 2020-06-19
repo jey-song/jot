@@ -16,9 +16,9 @@ NSString * const kTextImageName = @"";
 NSString * const kClearImageName = @"";
 NSString * const kSaveImageName = @"";
 
-@interface ExampleViewController () <JotViewControllerDelegate>
+@interface ExampleViewController () <JotViewDelegate>
 
-@property (nonatomic, strong) JotViewController *jotViewController;
+@property (nonatomic, strong) JotView *jotView;
 @property (nonatomic, strong) UIButton *saveButton;
 @property (nonatomic, strong) UIButton *clearButton;
 @property (nonatomic, strong) UIButton *toggleDrawingButton;
@@ -31,18 +31,7 @@ NSString * const kSaveImageName = @"";
 {
     if ((self = [super init])) {
         
-        _jotViewController = [JotViewController new];
-        
-        self.jotViewController.delegate = self;
-        self.jotViewController.state = JotViewStateDrawing;
-        self.jotViewController.textColor = [UIColor blackColor];
-        self.jotViewController.font = [UIFont boldSystemFontOfSize:64.f];
-        self.jotViewController.fontSize = 64.f;
-        self.jotViewController.textEditingInsets = UIEdgeInsetsMake(12.f, 6.f, 0.f, 6.f);
-        self.jotViewController.initialTextInsets = UIEdgeInsetsMake(6.f, 6.f, 6.f, 6.f);
-        self.jotViewController.fitOriginalFontSizeToViewWidth = YES;
-        self.jotViewController.textAlignment = NSTextAlignmentLeft;
-        self.jotViewController.drawingColor = [UIColor cyanColor];
+        _jotView = [JotView new];
         
         _saveButton = [UIButton new];
         self.saveButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:24.f];
@@ -81,32 +70,50 @@ NSString * const kSaveImageName = @"";
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self addChildViewController:self.jotViewController];
-    [self.view addSubview:self.jotViewController.view];
-    [self.jotViewController didMoveToParentViewController:self];
-    [self.jotViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.view addSubview:self.jotView];
+    [self.jotView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
     
+    self.jotView.delegate = self;
+    self.jotView.state = JotViewStateDrawing;
+    self.jotView.textColor = [UIColor blackColor];
+    self.jotView.font = [UIFont boldSystemFontOfSize:64.f];
+    self.jotView.fontSize = 64.f;
+    self.jotView.textEditingInsets = UIEdgeInsetsMake(12.f, 6.f, 0.f, 6.f);
+    self.jotView.initialTextInsets = UIEdgeInsetsMake(6.f, 6.f, 6.f, 6.f);
+    self.jotView.fitOriginalFontSizeToViewWidth = YES;
+    self.jotView.textAlignment = NSTextAlignmentLeft;
+    self.jotView.drawingColor = [UIColor cyanColor];
+    
+    CGFloat top;
+    CGFloat bottom;
+    if (@available(iOS 11.0, *)) {
+        top = self.additionalSafeAreaInsets.top;
+        bottom = self.additionalSafeAreaInsets.bottom;
+    } else {
+        top = 0;
+        bottom = 0;
+    }
     [self.view addSubview:self.saveButton];
     [self.saveButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.and.width.equalTo(@44);
         make.right.equalTo(self.view).offset(-4.f);
-        make.top.equalTo(self.view).offset(4.f);
+        make.top.equalTo(self.view).offset(44.f + top);
     }];
     
     [self.view addSubview:self.clearButton];
     [self.clearButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.and.width.equalTo(@44);
         make.left.equalTo(self.view).offset(4.f);
-        make.top.equalTo(self.view).offset(4.f);
+        make.top.equalTo(self.view).offset(44.f + top);
     }];
     
     [self.view addSubview:self.toggleDrawingButton];
     [self.toggleDrawingButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.and.width.equalTo(@44);
         make.right.equalTo(self.view).offset(-4.f);
-        make.bottom.equalTo(self.view).offset(-4.f);
+        make.bottom.equalTo(self.view).offset(-(4.f + bottom));
     }];
 }
 
@@ -114,8 +121,8 @@ NSString * const kSaveImageName = @"";
 {
     [super viewDidAppear:animated];
     
-    if (self.jotViewController.state == JotViewStateText) {
-        self.jotViewController.state = JotViewStateEditingText;
+    if (self.jotView.state == JotViewStateText) {
+        self.jotView.state = JotViewStateEditingText;
     }
 }
 
@@ -123,15 +130,15 @@ NSString * const kSaveImageName = @"";
 
 - (void)clearButtonAction
 {
-    [self.jotViewController clearAll];
+    [self.jotView clearAll];
 }
 
 - (void)saveButtonAction
 {
-    UIImage *drawnImage = [self.jotViewController renderImageWithScale:2.f
+    UIImage *drawnImage = [self.jotView renderImageWithScale:2.f
                                                                onColor:self.view.backgroundColor];
     
-    [self.jotViewController clearAll];
+    [self.jotView clearAll];
     
     ALAssetsLibrary *library = [ALAssetsLibrary new];
     [library writeImageToSavedPhotosAlbum:[drawnImage CGImage]
@@ -147,25 +154,25 @@ NSString * const kSaveImageName = @"";
 
 - (void)toggleDrawingButtonAction
 {
-    if (self.jotViewController.state == JotViewStateDrawing) {
+    if (self.jotView.state == JotViewStateDrawing) {
         [self.toggleDrawingButton setTitle:kPencilImageName forState:UIControlStateNormal];
         
-        if (self.jotViewController.textString.length == 0) {
-            self.jotViewController.state = JotViewStateEditingText;
+        if (self.jotView.textString.length == 0) {
+            self.jotView.state = JotViewStateEditingText;
         } else {
-            self.jotViewController.state = JotViewStateText;
+            self.jotView.state = JotViewStateText;
         }
         
-    } else if (self.jotViewController.state == JotViewStateText) {
-        self.jotViewController.state = JotViewStateDrawing;
-        self.jotViewController.drawingColor = [UIColor colorWithRed:((double)arc4random()/UINT32_MAX) green:((double)arc4random()/UINT32_MAX) blue:((double)arc4random()/UINT32_MAX) alpha:1.0];
+    } else if (self.jotView.state == JotViewStateText) {
+        self.jotView.state = JotViewStateDrawing;
+        self.jotView.drawingColor = [UIColor colorWithRed:((double)arc4random()/UINT32_MAX) green:((double)arc4random()/UINT32_MAX) blue:((double)arc4random()/UINT32_MAX) alpha:1.0];
         [self.toggleDrawingButton setTitle:kTextImageName forState:UIControlStateNormal];
     }
 }
 
-#pragma mark - JotViewControllerDelegate
+#pragma mark - JotViewDelegate
 
-- (void)jotViewController:(JotViewController *)jotViewController isEditingText:(BOOL)isEditing
+- (void)jotView:(JotView *)jotView isEditingText:(BOOL)isEditing
 {
     self.clearButton.hidden = isEditing;
     self.saveButton.hidden = isEditing;

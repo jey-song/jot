@@ -1,12 +1,12 @@
 //
-//  JotViewController.m
+//  JotView.m
 //  jot
 //
 //  Created by Laura Skelton on 4/30/15.
 //
 //
 
-#import "JotViewController.h"
+#import "JotView.h"
 #import "JotDrawView.h"
 #import "JotTextView.h"
 #import "JotTextEditView.h"
@@ -14,7 +14,7 @@
 #import "UIImage+Jot.h"
 #import "JotDrawingContainer.h"
 
-@interface JotViewController () <UIGestureRecognizerDelegate, JotTextEditViewDelegate, JotDrawingContainerDelegate>
+@interface JotView () <UIGestureRecognizerDelegate, JotTextEditViewDelegate, JotDrawingContainerDelegate>
 
 @property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
 @property (nonatomic, strong) UIPinchGestureRecognizer *pinchRecognizer;
@@ -27,7 +27,7 @@
 
 @end
 
-@implementation JotViewController
+@implementation JotView
 
 - (instancetype)init
 {
@@ -66,6 +66,8 @@
         
         _tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
         self.tapRecognizer.delegate = self;
+        
+        [self initUI];
     }
     
     return self;
@@ -77,16 +79,14 @@
     self.drawingContainer.delegate = nil;
 }
 
-- (void)viewDidLoad
+- (void)initUI
 {
-    [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor clearColor];
     self.drawingContainer.clipsToBounds = YES;
     
-    [self.view addSubview:self.drawingContainer];
+    [self addSubview:self.drawingContainer];
     [self.drawingContainer mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+        make.edges.equalTo(self);
     }];
     
     [self.drawingContainer addSubview:self.drawView];
@@ -99,9 +99,9 @@
         make.edges.equalTo(self.drawingContainer);
     }];
     
-    [self.view addSubview:self.textEditView];
+    [self addSubview:self.textEditView];
     [self.textEditView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+        make.edges.equalTo(self);
     }];
     
     [self.drawingContainer addGestureRecognizer:self.tapRecognizer];
@@ -121,8 +121,8 @@
         self.textEditView.isEditing = (state == JotViewStateEditingText);
         
         if (state == JotViewStateEditingText
-            && [self.delegate respondsToSelector:@selector(jotViewController:isEditingText:)]) {
-            [self.delegate jotViewController:self isEditingText:YES];
+            && [self.delegate respondsToSelector:@selector(jotView:isEditingText:)]) {
+            [self.delegate jotView:self isEditingText:YES];
         }
         
         self.drawingContainer.multipleTouchEnabled =
@@ -377,8 +377,8 @@
     
     self.textString = textString;
     
-    if ([self.delegate respondsToSelector:@selector(jotViewController:isEditingText:)]) {
-        [self.delegate jotViewController:self isEditingText:NO];
+    if ([self.delegate respondsToSelector:@selector(jotView:isEditingText:)]) {
+        [self.delegate jotView:self isEditingText:NO];
     }
 }
 

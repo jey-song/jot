@@ -6,4 +6,4 @@
 //
 //
 
-#import "JotViewController.h"
+#import "JotView.h"

@@ -11,7 +11,7 @@
 
 /**
  *  Private class to handle touch drawing. Change the properties
- *  in a JotViewController instance to configure this private class.
+ *  in a JotView instance to configure this private class.
  */
 @interface JotDrawView : UIView
 
@@ -20,7 +20,7 @@
  *  NO if the stroke width should vary depending on drawing
  *  speed.
  *
- *  @note Set drawingConstantStrokeWidth in JotViewController
+ *  @note Set drawingConstantStrokeWidth in JotView
  *  to control this setting.
  */
 @property (nonatomic, assign) BOOL constantStrokeWidth;
@@ -29,7 +29,7 @@
  *  Sets the stroke width if constantStrokeWidth is true,
  *  or sets the base strokeWidth for variable drawing paths.
  *
- *  @note Set drawingStrokeWidth in JotViewController
+ *  @note Set drawingStrokeWidth in JotView
  *  to control this setting.
  */
 @property (nonatomic, assign) CGFloat strokeWidth;
@@ -37,7 +37,7 @@
 /**
  *  Sets the stroke color. Each path can have its own stroke color.
  *
- *  @note Set drawingColor in JotViewController
+ *  @note Set drawingColor in JotView
  *  to control this setting.
  */
 @property (nonatomic, strong) UIColor *strokeColor;
@@ -45,7 +45,7 @@
 /**
  *  Clears all paths from the drawing, giving a blank slate.
  *
- *  @note Call clearDrawing or clearAll in JotViewController
+ *  @note Call clearDrawing or clearAll in JotView
  *  to trigger this method.
  */
 - (void)clearDrawing;
@@ -88,7 +88,7 @@
  *
  *  @return An image of the rendered drawing on the background image.
  *
- *  @note Call drawOnImage: in JotViewController
+ *  @note Call drawOnImage: in JotView
  *  to trigger this method.
  */
 - (UIImage *)drawOnImage:(UIImage *)image;
@@ -100,7 +100,7 @@
  *
  *  @return An image of the rendered drawing.
  *
- *  @note Call renderWithSize: in JotViewController
+ *  @note Call renderWithSize: in JotView
  *  to trigger this method.
  */
 - (UIImage *)renderDrawingWithSize:(CGSize)size;
